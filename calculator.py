@@ -92,6 +92,7 @@ dbuttons = [
         'text': '=',
         'col': 3,
         'row': 5
+   
     }
 ]
 
@@ -106,12 +107,17 @@ class Controlator(ttk.Frame):
         d.grid(column=0, row=0, columnspan=4)
 
         for properties in dbuttons:
-            btn = CalcButton(self, properties['text'], lambda: pinta(properties.get('text')), properties.get('W', 1), properties.get('H', 1))
+            btn = CalcButton(self, properties['text'], pinta, properties.get('W', 1), properties.get('H', 1))  #Self heredado es ttk.Frame(padre), 
             btn.grid(column=properties['col'], row=properties['row'], columnspan=properties.get('W', 1), rowspan=properties.get('H', 1))  
 
+        @classmethod
+        def pinta(cls, valor):
+            print(valor)
+            return valor
+    '''
         properties = {'text': 'Hola'}
 
-            '''
+        
             if properties['text'] == '0':
                 btn.pack_propagate(1)
                 btn.grid(column=properties['col'], row=properties['row'], colspan=2)
@@ -139,7 +145,7 @@ class CalcButton(ttk.Frame):
         ttk.Frame.__init__(self, parent, width=68*width, height=50*heigth)  #68 es 272/4
         self.pack_propagate(0)  #el pack_propagate(0) determina que el ancho se mantenga fijo
 
-        btn = ttk.Button(self, text=value, command=command)    #creamos la instancia Button   #el valor del texto es value, heredado del __init__
+        btn = ttk.Button(self, text=value, command=lambda: command(value))    #creamos la instancia Button   #el valor del texto es value, heredado del __init__
         btn.pack(side=TOP, fill=BOTH, expand=True)  #Empaquetate arriba, rellena ambas dimensiones y expándete
 
 '''
