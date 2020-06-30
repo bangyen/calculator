@@ -107,35 +107,36 @@ class Controlator(ttk.Frame):
         d.grid(column=0, row=0, columnspan=4)
 
         for properties in dbuttons:
-            btn = CalcButton(self, properties['text'], pinta, properties.get('W', 1), properties.get('H', 1))  #Self heredado es ttk.Frame(padre), 
+            btn = CalcButton(self, properties['text'], d.paint, properties.get('W', 1), properties.get('H', 1))  #Self heredado es ttk.Frame(padre), #De CalcButton: (self, parent, value, command, width=1, heigth=1)
             btn.grid(column=properties['col'], row=properties['row'], columnspan=properties.get('W', 1), rowspan=properties.get('H', 1))  
 
         @classmethod
         def pinta(cls, valor):
             print(valor)
             return valor
-    '''
-        properties = {'text': 'Hola'}
 
-        
-            if properties['text'] == '0':
-                btn.pack_propagate(1)
-                btn.grid(column=properties['col'], row=properties['row'], colspan=2)
-            else:
-                btn.grid(column=properties['col'], row=properties['row'])
-'''
 
 class Display(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent, width=272, height=50)
         self.pack_propagate(0)
     
+        self.value = '0' #Podemos situar value (sin self.) fuera de la función init (en la línea 120, por ejemplo)
+
         s = ttk.Style()  #Crea una instancia de un estilo
         s.theme_use('alt')
         s.configure('my.TLabel', font='Helvetica 36', background='black', foreground='white')
 
-        lbl = ttk.Label(self, text='0', anchor=E, style='my.TLabel') #E = East/Derecha
-        lbl.pack(side=TOP, fill=BOTH, expand=True)
+        self.lbl = ttk.Label(self, text=self.value, anchor=E, style='my.TLabel') #E = East/Derecha
+        self.lbl.pack(side=TOP, fill=BOTH, expand=True) #Los atributos son las variables globales de mi instancia
+
+    def paint(self, algo):
+        if algo.isdigit():  # permite ir dibujando los números en el display y que se acumulen
+            if self.value == '0':
+                self.value = algo
+            else:            
+                self.value += str(algo) #Acumulamos el valor en el display cada vez que pulsamos una tecla
+        self.lbl.config(text=self.value)
 
 class Selector(ttk.Radiobutton):
     pass

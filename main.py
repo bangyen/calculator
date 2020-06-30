@@ -11,8 +11,7 @@ class MainApp(Tk):
         self.pack_propagate(False)
 
         c = calculator.Controlator(self)
-        c.pack(side=TOP, fill=BOTH) #Al definir como fill=BOTH va a ocupar todo el ancho
-    #existen tres geometrías; grid (monta una rejilla con dos parámetros column y row), place (coordenadas) y pack
+        c.pack(side=TOP, fill=BOTH) #Al definir como fill=BOTH va a ocupar todo el ancho # existen tres geometrías; grid (monta una rejilla con dos parámetros column y row), place (coordenadas) y pack
 
     def start(self):
         self.mainloop()
