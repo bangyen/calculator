@@ -154,7 +154,7 @@ class Controlator(ttk.Frame):
         if algo == ',' and not ',' in self.dispValue:
             self.dispValue += str(algo)
 
-        if algo == '+':
+        if algo == '+' or algo == '-' or algo == 'x' or algo == '÷':
             self.op1 = self.to_float(self.dispValue)
             self.operation = algo 
             self.dispValue = '0'
