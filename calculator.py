@@ -103,10 +103,7 @@ def pinta(cls, valor):
 class Controlator(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent, width=272, height=300)  #(self, parent, width=272, height=300) Podemos eliminar las medidas, ya que hemos especificado en MainApp fill=BOTH
-        self.op1 = 0
-        self.op2 = 0
-        self.operation = ''
-        self.dispValue = '0'
+        self.reset() #Evitamos crear los cuatro atributos 18 veces, una para cada botón. Ahora invocamos self.reset() cada vez
 
         self.display = Display(self)
         self.display.grid(column=0, row=0, columnspan=4)
@@ -114,6 +111,12 @@ class Controlator(ttk.Frame):
         for properties in dbuttons:
             btn = CalcButton(self, properties['text'], self.set_operation, properties.get('W', 1), properties.get('H', 1))  #Self heredado es ttk.Frame(padre), #De CalcButton: (self, parent, value, command, width=1, heigth=1)
             btn.grid(column=properties['col'], row=properties['row'], columnspan=properties.get('W', 1), rowspan=properties.get('H', 1))  
+
+    def reset(self): #Generamos la función para que sea invocada y no tener que poner los cuatro atributos 18 veces
+        self.op1 = 0
+        self.op2 = 0
+        self.operation = ''
+        self.dispValue = '0'
 
     def to_float(self, valor):
         return float(valor.replace(',', '.'))
@@ -143,7 +146,7 @@ class Controlator(ttk.Frame):
                 self.dispValue += str(algo) #Acumulamos el valor en el display cada vez que pulsamos una tecla
 
         if algo == 'C':
-            self.dispValue = '0'
+            self.rest() #Ahorramos poner los cuatro atributos 18 veces invocando a la función que ya los contempla
 
         if algo == '+/-' and self.dispValue != '0':
             if self.dispValue[0] == '-':
