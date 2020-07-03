@@ -121,6 +121,9 @@ class Controlator(ttk.Frame):
     def to_float(self, valor):
         return float(valor.replace(',', '.'))
 
+    def to_str(self, valor):
+        return str(valor).replace('.', ',')
+
         #@classmethod
         #def pinta(cls, valor):
          #   print(valor)
@@ -146,7 +149,7 @@ class Controlator(ttk.Frame):
                 self.dispValue += str(algo) #Acumulamos el valor en el display cada vez que pulsamos una tecla
 
         if algo == 'C':
-            self.rest() #Ahorramos poner los cuatro atributos 18 veces invocando a la función que ya los contempla
+            self.reset() #Ahorramos poner los cuatro atributos 18 veces invocando a la función que ya los contempla
 
         if algo == '+/-' and self.dispValue != '0':
             if self.dispValue[0] == '-':
@@ -165,7 +168,7 @@ class Controlator(ttk.Frame):
         if algo == '=':
             self.op2 = self.to_float(self.dispValue)
             res = self.calculate()
-            self.dispValue = str(res)
+            self.dispValue = self.to_str(res)
 
         self.display.paint(self.dispValue)
 
