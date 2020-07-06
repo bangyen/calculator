@@ -1,100 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 
+chars = [*list('0 ,=123+456-789x C'), '+/-', '÷']
 dbuttons = [
-    {
-        'text': '1',
-        'col': 0,
-        'row': 4
-    },
-    {
-        'text': '2',
-        'col': 1,
-        'row': 4
-    },
-    {
-        'text': '3',
-        'col': 2,
-        'row': 4
-    },
-    {
-        'text': '+',
-        'col': 3,
-        'row': 4
-    },
-    {
-        'text': '4',
-        'col': 0,
-        'row': 3
-    },
-    {
-        'text': '5',
-        'col': 1,
-        'row': 3
-    },
-    {
-        'text': '6',
-        'col': 2,
-        'row': 3
-    },
-    {
-        'text': '-',
-        'col': 3,
-        'row': 3
-    },
-    {
-        'text': '7',
-        'col': 0,
-        'row': 2
-    },
-    {
-        'text': '8',
-        'col': 1,
-        'row': 2
-    },
-    {
-        "text": '9',
-        'col': 2,
-        'row': 2
-    },
-    {
-        'text': 'x',
-        'col': 3,
-        'row': 2
-    },
-    {
-        'text': 'C',
-        'col': 1,
-        'row': 1
-    },
-    {
-        'text': '+/-',
-        'col': 2,
-        'row': 1
-    },
-    {
-        'text': '÷',
-        'col': 3,
-        'row': 1
-    },
-    {
-        'text': '0',
-        'col': 0,
-        'row': 5,
-        'W': 2
-    },
-    {
-        'text': ',',
-        'col': 2,
-        'row': 5
-    },
-    {
-        'text': '=',
-        'col': 3,
-        'row': 5
-   
-    }
+    {'text': chars[k], 'col': k % 4, 'row': 5 - k // 4}
+    for k in range(len(chars))
 ]
+dbuttons = [k for k in dbuttons if k['text'] != ' ']
+dbuttons[0]['W'] = 2
+
 
 def pinta(cls, valor):
     print(valor)
