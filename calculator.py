@@ -113,8 +113,8 @@ class Controlator(ttk.Frame):
             btn.grid(column=properties['col'], row=properties['row'], columnspan=properties.get('W', 1), rowspan=properties.get('H', 1))  
 
     def reset(self): #Generamos la función para que sea invocada y no tener que poner los cuatro atributos 18 veces
-        self.op1 = 0
-        self.op2 = 0
+        self.op1 = None        # 0 PUede ser un valor ambíguo, por lo que probamos NADA...PONEMOS EL OPERADOR A VACÍO
+        self.op2 = None
         self.operation = ''
         self.dispValue = '0'
         self.signo_recien_pulsado = False 
@@ -146,7 +146,7 @@ class Controlator(ttk.Frame):
         if algo.isdigit():  # permite ir dibujando los números en el display y que se acumulen
             if self.dispValue == '0' or self.signo_recien_pulsado:
                 self.op1 = self.to_float(self.dispValue)
-                self.op2 = 0
+                self.op2 = None
                 self.dispValue = algo
             else:            
                 self.dispValue += str(algo) #Acumulamos el valor en el display cada vez que pulsamos una tecla
@@ -164,29 +164,29 @@ class Controlator(ttk.Frame):
             self.dispValue += str(algo)
 
         if algo == '+' or algo == '-' or algo == 'x' or algo == '÷':
-            if self.op1 == 0:
+            if self.op1 == None:
                 self.op1 = self.to_float(self.dispValue)
                 self.operation = algo 
-            elif self.op2 == 0:
+            elif self.op2 == None:
                 self.op2 = self.to_float(self.dispValue)
                 res = self.calculate()
                 self.dispValue = self.to_str(res)
                 self.operation = algo 
             else:
                 self.op1 = self.to_float(self.dispValue)
-                self.op2 = 0
+                self.op2 = None
                 self.operation = algo
             self.signo_recien_pulsado = True 
         else:
             self.signo_recien_pulsado = False 
 
         if algo == '=':
-            if self.op1 != 0 and self.op2 == 0:
+            if self.op1 != None and self.op2 == None:
                 self.op2 = self.to_float(self.dispValue)
                 res = self.calculate()
                 self.dispValue = self.to_str(res)
 
-            elif self.op1 != 0 and self.op2 != 0:
+            elif self.op1 != None and self.op2 != None:
                 self.op1 = self.to_float(self.dispValue)
                 res = self.calculate()
                 self.dispValue = self.to_str(res)
